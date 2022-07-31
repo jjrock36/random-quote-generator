@@ -1,13 +1,36 @@
-import React from 'react';
-import useFetch from './useFetch';
+import React, { useState } from 'react';
 import { Box, Container, Paper, Typography } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Layout from './Layout';
+import axios from 'axios';
+import { useEffect } from 'react';
+// import useFetch from './useFetch';
+
+const url = 'https://api.quotable.io/random';
 
 const App = () => {
-  const { response, error, loading } = useFetch(
-    'https://quote-garden.herokuapp.com/api/v3/quotes/random'
-  );
+  // const [copied, setCopied] = useState(false);
+  const [quote, setQuote] = useState({});
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchQuote(url);
+  }, []);
+  async function fetchQuote(url) {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await axios.get(url);
+      setQuote(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  }
+
+  const { content, author, tags } = quote;
 
   return (
     <Layout>
@@ -19,7 +42,7 @@ const App = () => {
           <Typography variant="h5" sx={{ mb: 5 }}>
             {loading && 'Loading...'}
             {error && 'Something went wrong.'}
-            {response && '"' + response.data[0].quoteText + '"'}
+            {content && '"' + content + '"'}
           </Typography>
           <Container
             variant="text"
@@ -44,12 +67,8 @@ const App = () => {
                 alignItems: 'start',
               }}
             >
-              <Typography variant="h6">
-                {response && response.data[0].quoteAuthor}
-              </Typography>
-              <Typography variant="subtitle2">
-                {response && response.data[0].quoteGenre}
-              </Typography>
+              <Typography variant="h6">{author && author}</Typography>
+              <Typography variant="subtitle2">{tags && tags[0]}</Typography>
             </Box>
             <ArrowRightAltIcon />
           </Container>
