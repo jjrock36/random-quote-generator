@@ -13,7 +13,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Quote />} />
             <Route path="/:id" element={<Author />} />
-            <Route path="*" element={<Typography>Not Found</Typography>} />
+            <Route path="*" element={<Typography>No No Found</Typography>} />
           </Routes>
         </Container>
       </Layout>
