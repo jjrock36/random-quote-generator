@@ -1,5 +1,7 @@
 import React from 'react';
-import { Paper, Typography } from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import Link from 'react-router-dom';
 import { useGlobalContext } from '../context';
 
 const Author = () => {
@@ -33,6 +35,35 @@ const Author = () => {
           </Paper>
         );
       })}
+      <Link to="/">
+        <Container
+          variant="text"
+          color="inherit"
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            '&:hover': {
+              backgroundColor: 'rgba(0,0,0,0.04)',
+              borderRadius: 1,
+              cursor: 'pointer',
+              transition: '.25s',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'start',
+            }}
+          >
+            <Typography variant="h6">Back to Main page</Typography>
+          </Box>
+          <ArrowRightAltIcon />
+        </Container>
+      </Link>
     </>
   ) : null;
 };
